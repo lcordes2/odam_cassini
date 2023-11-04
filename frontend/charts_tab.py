@@ -11,24 +11,23 @@ def charts():
     date_range = [date(2022, 1, 1), date(2023, 1, 1)]
     capacity = 88
 
-    df = pd.read_csv('dams.csv', header=0, low_memory=False)
+    df = pd.read_csv('frontend/dams.csv', header=0, low_memory=False)
     df = df.head(10)
     df = df[['Dam Name', 'Other Names', 'Former Names', 'Longitude', 'Latitude']]
     df.rename(columns={'Longitude': 'longitude', "Latitude": "latitude"}, inplace=True)
 
 
     option = st.selectbox('Dam Location',(df['Dam Name']))
-    st.write(df)
+    #st.write(df)
     st.map(df[(df['Dam Name'] == option)])
     st.date_input("Date Range", date_range)
 
     st.markdown("# oDam")
-    st.image("cover.jpg")
+    st.image("frontend/cover.jpg")
     st.markdown("###### :ocean: Know your water :ocean:")
 
 
     col1, col2 = st.columns(2)
-
 
     dummy_data = pd.DataFrame()
     dummy_data["Date"] = np.linspace(0, 10, 100)
