@@ -16,3 +16,5 @@ Our idea at oDam is to address the critical challenges posed by hydropolitical t
 """    
 )
 st.image("frontend/images/oDam_approach.png") 
+
+st.image("frontend/images/logos.png")

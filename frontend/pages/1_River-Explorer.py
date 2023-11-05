@@ -30,3 +30,5 @@ with st.container():
    
     dam_levels_dict = dict(dam_levels)
     st.bar_chart(dam_levels_dict, use_container_width=True)
+
+st.image("frontend/images/logos.png")

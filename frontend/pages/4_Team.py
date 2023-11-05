@@ -28,3 +28,5 @@ bios = """
 """
 
 st.markdown(bios)
+
+st.image("frontend/images/logos.png")
