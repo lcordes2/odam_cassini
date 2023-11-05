@@ -54,7 +54,7 @@ if update:
         early_chart = alt.Chart(forecast_df)
         early_line = early_chart.mark_line(color="#1D84CD").encode(
             x=alt.X('date:T', title='Date'),
-            y=alt.Y('normalized_downstream_flux:Q', scale=alt.Scale(domain=[-1.5, 1.5]), title='Inflow')
+            y=alt.Y('normalized_downstream_flux:Q', scale=alt.Scale(domain=[-1.5, 1.5]), title='<--   Drought Risk   |   Flood Risk   -->')
         )
         rect1 = make_rect(x=[0, 12], y=[1, 1.5], col="#ffeda0")
         rect2 = make_rect(x=[0, 12], y=[-1.5, -1], col="#ffeda0")
