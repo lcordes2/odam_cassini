@@ -13,7 +13,7 @@ import random
 
 df = pd.read_csv('frontend/dams.csv', header=0, low_memory=False)
 
-river = st.selectbox('Select River',(['Blue Nile', 'Other']))
+river = st.selectbox('Select River',(['Blue Nile']))
 
 dams = df[(df['river'] == river)]
 zoom_level = 2.5
@@ -21,7 +21,7 @@ st.map(dams, zoom=zoom_level, color='#008000')
 #st.error('This is an error', icon="🚨")
 
 with st.container():
-    st.header(f'Dams state for {river}')
+    st.header(f'Dam Capacities for the {river} River')
 
     dam_names = dams['name'].tolist()
     dam_names.sort(key=lambda x: dams[dams['name'] == x]['rank'].values[0])
