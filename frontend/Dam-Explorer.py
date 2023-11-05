@@ -67,7 +67,6 @@ if update:
         # update data 
         st.altair_chart(early_combined)
 
-
     with col2:
         # Annual Water Management Plan
         annual_chart = alt.Chart(dummy_data)
@@ -88,12 +87,5 @@ if update:
     st.divider()
     st.header("Dam Analytics")
     col3, col4 = st.columns(2)
-    with col3:
-        st.line_chart(dummy_data, x="Date", y=["Predicted Inflow", "Outflow"])
 
-        arr = np.random.normal(1, 1, size=100)
-        fig, ax = plt.subplots()
-        ax.hist(arr, bins=20)
-
-        st.pyplot(fig)
 st.image("frontend/images/logos.png")
