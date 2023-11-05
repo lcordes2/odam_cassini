@@ -22,6 +22,7 @@ st.set_page_config(
 )
 
 st.image("frontend/images/oDam_logo.png")
+st.image("frontend/images/logos.PNG")
 
 ## dummy data ##
 capacity = 88
