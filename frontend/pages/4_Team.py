@@ -29,4 +29,4 @@ bios = """
 
 st.markdown(bios)
 
-st.image("frontend/images/logos.png")
+st.image("frontend/images/logos.PNG")
