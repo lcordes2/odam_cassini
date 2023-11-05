@@ -36,6 +36,7 @@ dummy_data["Storage"] = [np.tan(i) for i in dummy_data["Date"]]
 monthly_df = pd.read_csv('frontend/data/monthly_average_water_stored.csv', header=0, low_memory=False)
 monthly_df = monthly_df.rename(columns={"month": "Month", "water_stored": "Storage"})
 monthly_df["Demand"] = [0, 0, 2, 4, 6, 8, 8, 4, 0, 0, 0, 0]
+forecast_df = pd.read_csv('frontend/data/forecasting.csv', header=0, low_memory=False)
 ###
 
 
@@ -50,22 +51,17 @@ if update:
     col1, col2 = st.columns(2)
     with col1:
         #Early Warning System
-        early_chart = alt.Chart(dummy_data)
+        early_chart = alt.Chart(forecast_df)
         early_line = early_chart.mark_line(color="#1D84CD").encode(
-            x=alt.X('Date:Q', title='Month'),
-            y=alt.Y('Predicted Inflow:Q', scale=alt.Scale(domain=[-1.5, 1.5]), title='Inflow')
+            x=alt.X('date:T', title='Date'),
+            y=alt.Y('normalized_downstream_flux:Q', scale=alt.Scale(domain=[-1.5, 1.5]), title='Inflow')
         )
-        rect1 = make_rect(x=[0, 12], y=[0.5, 1], col="#ffeda0")
-        rect2 = make_rect(x=[0, 12], y=[-1, -0.5], col="#ffeda0")
-        rect3 = make_rect(x=[0, 12], y=[1, 1.5], col="#feb24c")
-        rect4 = make_rect(x=[0, 12], y=[-1, -1.5], col="#feb24c")
-        text5 = alt.Chart({'values':[{'x': 4, 'y': 1.75}]}).mark_text(
-        text='Risk of flooding'
-        ).encode(
-            x='x:Q', y='y:Q'
-        )
+        rect1 = make_rect(x=[0, 12], y=[1, 1.5], col="#ffeda0")
+        rect2 = make_rect(x=[0, 12], y=[-1.5, -1], col="#ffeda0")
+        rect3 = make_rect(x=[0, 12], y=[1.5, 2], col="#feb24c")
+        rect4 = make_rect(x=[0, 12], y=[-1.5, -2], col="#feb24c")      
 
-        early_combined = (early_line + rect1 + rect2 + rect3 + rect4 + text5).properties(
+        early_combined = (early_line + rect1 + rect2 + rect3 + rect4).properties(
             title={'text': 'Early Warning System', 'anchor': 'middle'}
         )
         # add risk of flooding/dry conditions
