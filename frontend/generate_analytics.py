@@ -62,7 +62,7 @@ def analytics_fig():
     )
 
     fig.add_trace(
-        go.Scatter(x=upstream_df['Date'], y=upstream_df['Obs'], mode='lines', name='Infow', line=dict(color=inflow_col, width=2)),
+        go.Scatter(x=upstream_df['Date'], y=upstream_df['Obs'], mode='lines', name='Inflow', line=dict(color=inflow_col, width=2)),
         row=4, col=1
     )
 
