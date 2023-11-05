@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import altair as alt
 from matplotlib import pyplot as plt
+from generate_analytics import analytics_fig
 
 def make_rect(x, y, col):
     return alt.Chart(pd.DataFrame({'x': x, 'y': y})).mark_rect(
@@ -23,7 +24,7 @@ st.set_page_config(
 
 st.image("frontend/images/oDam_logo.png")
 
-## dummy data ##
+## data ##
 capacity = 88
 df = pd.read_csv('frontend/dams.csv', header=0, low_memory=False)
 dummy_data = pd.DataFrame()
@@ -31,6 +32,10 @@ dummy_data["Date"] = np.linspace(0, 10, 12)
 dummy_data["Predicted Inflow"] = [np.sin(i) for i in dummy_data["Date"]]
 dummy_data["Outflow"] = [np.cos(i) for i in dummy_data["Date"]]
 dummy_data["Storage"] = [np.tan(i) for i in dummy_data["Date"]]
+
+monthly_df = pd.read_csv('frontend/data/monthly_average_water_stored.csv', header=0, low_memory=False)
+monthly_df = monthly_df.rename(columns={"month": "Month", "water_stored": "Storage"})
+monthly_df["Demand"] = [0, 0, 2, 4, 6, 8, 8, 4, 0, 0, 0, 0]
 ###
 
 
@@ -47,8 +52,8 @@ if update:
         #Early Warning System
         early_chart = alt.Chart(dummy_data)
         early_line = early_chart.mark_line(color="#1D84CD").encode(
-            x='Date:Q',
-            y=alt.Y('Predicted Inflow:Q', scale=alt.Scale(domain=[-1.5, 1.5]))
+            x=alt.X('Date:Q', title='Month'),
+            y=alt.Y('Predicted Inflow:Q', scale=alt.Scale(domain=[-1.5, 1.5]), title='Inflow')
         )
         rect1 = make_rect(x=[0, 12], y=[0.5, 1], col="#ffeda0")
         rect2 = make_rect(x=[0, 12], y=[-1, -0.5], col="#ffeda0")
@@ -69,23 +74,24 @@ if update:
 
     with col2:
         # Annual Water Management Plan
-        annual_chart = alt.Chart(dummy_data)
-        annual_bars = annual_chart.mark_bar().encode(
-            x='Date:Q',
-            y='Predicted Inflow:Q'
+        annual_chart = alt.Chart(monthly_df)
+        annual_bars = annual_chart.mark_bar(color='grey').encode(
+            x='Month:Q',
+            y=alt.Y('Demand:Q', title='Water'),
         )
         annual_line = annual_chart.mark_line().encode(
-            x='Date:Q',
-            y='Outflow:Q'
+            x='Month:Q',
+            y=alt.Y('Storage:Q', title='Water'),
         )
         combined_chart = alt.layer(annual_bars, annual_line).properties(
         title={'text': 'Annual Water Management Plan', 'anchor': 'middle'}
-        ) 
+        )
         st.altair_chart(combined_chart)
-        # stacked barplots
 
     st.divider()
+
     st.header("Dam Analytics")
-    col3, col4 = st.columns(2)
+    analytics = analytics_fig()
+    st.plotly_chart(analytics)
 
 st.image("frontend/images/logos.PNG")

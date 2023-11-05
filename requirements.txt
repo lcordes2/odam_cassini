@@ -2,3 +2,4 @@ pandas
 numpy
 matplotlib
 altair==5.1.1
+plotly
