@@ -1,5 +1,0 @@
-pandas
-numpy
-matplotlib
-altair==5.1.1
-plotly== 5.18.0
